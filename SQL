@@ -1,0 +1,57 @@
+Ciudades (city) que empiecen por 'A' -->Select normal:
+SELECT city 
+FROM `city` 
+WHERE city like 'A%'
+
+Una lista de los paises que empiecen por 'a' y sus ciudades (select con join):
+SELECT country,city 
+FROM country join city 
+WHERE country like 'A%'
+
+Insertar en actores uno que se llame 'Paco' 'Meralgo':
+INSERT INTO actor (first_name,last_name) VALUES('Paco', 'Meralgo');
+
+Cambiar el nombre del actor con id 27 a 'Eufrasio':
+UPDATE actor set first_name = 'Eufrasio' 
+WHERE actor_id =27
+
+Eliminar el actor con id 40 ¿Qué pasa?:
+DELETE from actor where actor_id=40
+
+Título de la película con nombre de categoría:
+SELECT film.title, category.name 
+FROM film JOIN film_category ON film.film_id=film_category.film_id JOIN category 
+ON film_category.category_id=category.category_id
+
+Título de la película con nombre de sus actores:
+SELECT film.title, GROUP_CONCAT(CONCAT (actor.first_name,'',actor.first_name)) 
+FROM film JOIN film_actor ON film.film_id=film_actor.film_id JOIN actor 
+ON film_actor.actor_id=actor.actor_id 
+GROUP BY film.film_id;
+
+Películas de la categoría comedia:
+SELECT film.title, category.name 
+FROM film JOIN film_category ON film.film_id=film_category.film_id JOIN category 
+ON film_category.category_id=category.category_id 
+WHERE category.name='Comedy';
+
+Películas de actores cuyo nombre empiece por j y acabe con a:
+SELECT film.title,CONCAT(actor.first_name,'',actor.last_name) AS actor 
+FROM film JOIN film_actor ON film.film_id=film_actor.actor_id JOIN actor ON film_actor.actor_id=actor.actor_id
+WHERE actor.first_name = 'j%a';
+
+Insertad un alumno que se llame 'Eva García' y mirad qué valores se han insertado en los campos en los que no hemos puesto un valor ¿Por qué?:
+INSERT INTO alumno(nombre) values ('Eva Garcia')
+
+ 1 row inserted.
+Inserted row id: 16 (Query took 0.0010 seconds.)
+
+
+INSERT INTO alumno(nombre) values ('Eva Garcia');
+
+
+[ Edit inline ] [ Edit ] [ Create PHP code ]
+
+ Warning: #1364 Field 'telefono' doesn't have a default value
+ Warning: #1364 Field 'tipo de alumno' doesn't have a default value
+ Los campos teléfono y tipo de alumno mo permiten valores nulos, así que pone el valor por defecto, que en el caso de las cadenas es un string vacío y en el caso de los int es 0.
